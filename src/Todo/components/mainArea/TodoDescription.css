@@ -1,0 +1,8 @@
+.descriptionContainer{
+    display: inline-block;
+}
+.todoDescription{
+    border: 2px solid black;
+    width: 50vw;
+    height: 30vh;
+}

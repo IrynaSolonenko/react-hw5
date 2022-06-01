@@ -1,62 +1,51 @@
-import {Component} from "react";
+import './styles/TodoForm.css'
+import {useMemo, useState} from "react";
+import TodoAdd from "./TodoAdd";
+import React from "react";
 import {TodoList} from "./TodoList";
 import {TodoSearchForm} from "./TodoSearchForm";
-import './TodoForm.css'
 
-export class TodoForm extends Component{
-    // constructor(props) {
-    //     super(props);
-    // }
-    state = {
-        todoItem: {
-            title: '',
-            description: ''
-        }
-    };
+export function TodoForm(props) {
 
+    const [lists, setLists] = useState([
+        {id:1, title: 'Clean the flat', completed: false, description: 'прибраться в комнате получше'},
+        {id:2, title: 'Garbage', completed: false, description: ''},
+        {id:3, title: 'Prepare dinner', completed: false, description: ''}
+    ])
 
-    onFormSubmit = (event) => {
-        event.preventDefault();
-        const newItem = {...this.state.todoItem, id:10, completed: false}
-        console.log(newItem)
+    console.log(lists);
+
+    const createItem = (newItem) => {
+        setLists([...lists, newItem])
     }
 
-    onTitleChange  = ({target}) => {
-        this.setState({todoItem: {...this.state.todoItem, title: target.value}});
-        console.log(this.state)
-    }
+    const [filter, setFilter] = useState({query: ''})
 
-    onDescriptionChange  = ({target}) => {
-        this.setState({todoItem: {...this.state.todoItem, description: target.value}});
+const sortedList = useMemo(()=>{
+    if (filter.query){
+        return sortedList.filter(list=>list.title.toLowerCase().includes(filter.query))
     }
+    return lists;
+}, [filter.sort, lists])
 
-    componentDidUpdate(prevProps, prevState, snapshot) {
-        console.log(this.state)
-    }
+    const sortedAndSearchLists = useMemo(()=>{
+        return sortedList.filter(list=>list.title.toLowerCase().includes(filter.query))
+    },[filter.query, sortedList])
 
-    render() {
-        return(
-            <div className='mainForm'>
+
+    return (
+        <div className='mainForm'>
             <form
-                onSubmit={this.onFormSubmit}
-                >
-                <div className={'searchContainer'}>
-                <h1 className={'mainName'}>Todos</h1>
-                    <TodoSearchForm />
-                </div>
-                    <TodoList getCurrentTodo={this.props.getCurrentTodo} />
-                <div className='messageForm'>
-                    <input
-                        className='inputArea'
-                        type="text"
-                        value={this.state.todoItem.title}
-                        onChange={this.onTitleChange}
-                        placeholder={'What you need to do'}
-                    />
-                    <button className='addButton'>+</button>
-                </div>
+            >
+               <TodoSearchForm
+               filter={filter}
+               setFilter={setFilter}
+               />
+                <TodoList
+                    lists={sortedAndSearchLists}
+                />
+             <TodoAdd create={createItem}/>
             </form>
-            </div>
-        )
-    }
+        </div>
+    )
 }

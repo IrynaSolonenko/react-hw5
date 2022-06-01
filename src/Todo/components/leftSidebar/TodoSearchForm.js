@@ -1,24 +1,20 @@
-import {Component} from "react";
-import './TodoSearchForm'
-import './TodoSearchForm.css'
+import {useState} from "react";
+import './styles/TodoSearchForm.css'
+import React from "react";
 
-export class TodoSearchForm extends Component {
-
-    onSearchChange(){
-
-    }
+export function TodoSearchForm({filter, setFilter}){
 
 
-
-    render() {
-        return(
-                <input
-                    type="text"
-                    className='searchArea'
-                    onChange={this.onSearchChange}
-                    placeholder={'Search'}
-                />
-
+    return(
+        <div className={'searchContainer'}>
+            <h1 className={'mainName'}>Todos</h1>
+            <input
+                type="text"
+                className='searchArea'
+                placeholder={'Search'}
+                value={filter.query}
+                onChange={event=> setFilter({...filter, query: event.target.value})}
+            />
+        </div>
         )
-    }
 }

@@ -1,33 +1,19 @@
-import {Component} from "react";
 import './TodoDescription.css';
+import {useState} from "react";
 
-export class TodoDescription extends Component {
+export function TodoDescription ({props, lists}){
+    const [active, setActive] = useState(false);
+    return(
+        <div className={'descriptionContainer'}>
+            <h1>Title</h1>
+        <h2 >
+            {active ? active.props.item.title : null}
+        </h2>
+            <p
+                className={'todoDescription'}>
+                {active ? active.props.item.description : null}
+            </p>
+        </div>
+    )
 
-    // constructor(props) {
-    //     super(props);
-    // }
-    componentDidUpdate(prevProps, prevState, snapshot) {
-        console.log(prevProps)
-    }
-
-    render() {
-        return (
-            <div className={'descriptionContainer'}>
-                {
-                    this.props.currentTodo.title ?
-                        <>
-                            <h2>
-                                {this.props.currentTodo.title}
-                            </h2>
-                            <textarea
-                                type="text"
-                                className={'todoDescription'}>
-                                {this.props.currentTodo.description}</textarea>
-                        </>
-                         :
-                         <h1>Title</h1>
-                }
-            </div>
-        )
-    }
 }

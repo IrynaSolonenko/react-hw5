@@ -21,16 +21,20 @@
 
 .messageForm{
     display: flex;
+    flex-direction: column;
     padding: 30px 15px 20px;
     border-top: 2px solid #9A9A9A;
 
 }
-
 .inputArea{
+    margin-bottom: 5px;
+}
+
+.inputArea, .descriptionArea{
     font-family: 'Inter', sans-serif;
     font-style: normal;
     width: 316px;
-    height: 63px;
+    height: 33px;
     border-radius: 15px;
     border: none;
     margin-right: 10px;
@@ -50,4 +54,9 @@
     margin: 24px 9px;
     /*padding: 10px 15px;*/
     cursor: pointer;
+}
+
+.messageContainer{
+    display: flex;
+    align-items: center;
 }

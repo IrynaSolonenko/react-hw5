@@ -1,21 +1,35 @@
-import {Component} from "react";
-import './TodoItem.css'
+import './styles/TodoItem.css'
+import {useState} from "react";
 
-export class TodoItem extends Component{
-    // constructor(props) {
-    //     super(props);
-    // }
-    render() {
-        return(
-            <div className='todoItem' onClick={()=> this.props.getCurrentTodo(this.props.item)} >
-                <input type="checkbox" onClick={() => this.props.onItemComplete(this.props.item.id)}></input>
-                <span className={this.props.item.completed ? 'completed' : 'default'}>{this.props.item.title}</span>
+export function TodoItem(props, remove, lists){
+
+    const [isDone, setDone] = useState(false);
+    const handleChange = () => {
+        setDone(!isDone);
+    }
+
+    const [active, setActive] = useState(false);
+
+    return(
+            <div
+                 onClick={()=>setActive(!active)}
+                 className={`todoItem ${ active ? 'todoItem_active': 'todoItem'}`}>
+                <input  type="checkbox"
+                        checked={isDone}
+                        onChange={handleChange}
+                />
+                <span
+                    className={isDone ? 'completed' : 'default'}
+                >{props.item.title}
+
+                </span>
                 <div className='description'>
-                    <span className={this.props.item.completed ? 'completed' : 'default'}>{this.props.item.description}</span>
+                    <span className={isDone ? 'completed' : 'default'}>{props.item.description}</span>
                 </div>
 
-                {/*<button onClick={() => this.props.onItemDelete(this.props.item.id)}>X</button>*/}
+                {/*<button onClick={() => props.remove(props.list)}>X</button>*/}
             </div>
         );
-    }
 }
+
+

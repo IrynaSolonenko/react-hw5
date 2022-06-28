@@ -12,11 +12,15 @@ export function TodoDescription ({currentTodo, setUpdatedTodo}){
     const handleChangeDescription = (e) => {
         setNewTodo({...currentTodo, [e.target.name]: e.target.value})
     }
-    
+
+    let c;
     const saveChange = () => {
         let data = new Date().toLocaleTimeString();
         setNewTodo({...newTodo, history: [...newTodo.history, {field: 'description', action: 'change', prevValue: currentTodo.description, currentValue: newTodo.description, appliedAt: data}]})
         setIsNew(true);
+        // c = newTodo.history.filter(item=>{
+        //     return item.appliedAt;
+        // })
     }
 
     useEffect(() => {
@@ -44,11 +48,10 @@ export function TodoDescription ({currentTodo, setUpdatedTodo}){
                             <span><b>{'todo-name: '}</b>{currentTodo.title}</span><br />
                             <span><b>{'current todo-description: '}</b>{newTodo.description}</span><br />
                             <span><b>{'previous todo-description: '}</b>{currentTodo.description}</span><br />
-                            <span><b>{'change-data: '}</b>{
-                                newTodo.history.map(item=>{
-                                    return item ? item.appliedAt : '';
-                                })
-                            }</span>
+                            {/*<span><b>{'change-data: '}</b>{newTodo.history.filter(item=>{*/}
+                            {/*    return item.appliedAt;*/}
+                            {/*/!*})}</span>*!
+                            /не работает*/}
 
                         </div>
                     </div>

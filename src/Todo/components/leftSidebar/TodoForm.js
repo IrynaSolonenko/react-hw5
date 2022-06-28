@@ -1,17 +1,13 @@
 import './styles/TodoForm.css'
-import {useMemo, useState} from "react";
+import {useId, useMemo, useState} from "react";
 import TodoAdd from "./TodoAdd";
 import React from "react";
 import {TodoList} from "./TodoList";
 import {TodoSearchForm} from "./TodoSearchForm";
 
-export function TodoForm(props) {
+export function TodoForm({setCurrentTodo, name, setLists, lists}) {
 
-    const [lists, setLists] = useState([
-        {id:1, title: 'Clean the flat', completed: false, description: 'прибраться в комнате получше'},
-        {id:2, title: 'Garbage', completed: false, description: ''},
-        {id:3, title: 'Prepare dinner', completed: false, description: ''}
-    ])
+
 
     console.log(lists);
 
@@ -42,6 +38,8 @@ const sortedList = useMemo(()=>{
                setFilter={setFilter}
                />
                 <TodoList
+                    name={name}
+                    setCurrentTodo={setCurrentTodo}
                     lists={sortedAndSearchLists}
                 />
              <TodoAdd create={createItem}/>

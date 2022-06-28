@@ -55,6 +55,9 @@
     /*padding: 10px 15px;*/
     cursor: pointer;
 }
+.addButton:hover{
+    background-color: rgba(16, 101, 16, 0.52);
+}
 
 .messageContainer{
     display: flex;

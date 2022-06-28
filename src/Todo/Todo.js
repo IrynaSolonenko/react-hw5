@@ -1,22 +1,30 @@
 import {TodoForm} from "./components/leftSidebar/TodoForm";
 import {TodoDescription} from "./components/mainArea/TodoDescription";
 import './components/Todo.css'
-import {useState} from "react";
+import {useEffect, useState} from "react";
 
-export function Todo (change, setChange){
-    const getCurrentTodo = (todo) => {
-        setChange(todo)
-    }
+export function Todo (){
+
+    const [lists, setLists] = useState([
+        {id:1, title: 'Clean the flat', completed: false, description: 'прибраться в комнате получше', history: []},
+        {id:2, title: 'Garbage', completed: false, description: '', history: []},
+        {id:3, title: 'Prepare dinner', completed: false, description: '', history: []}
+    ])
+    const [currentTodo, setCurrentTodo] = useState({})
+    const [updatedTodo, setUpdatedTodo] = useState({})
+
+    useEffect(() => {
+        console.log(updatedTodo)
+        setLists(lists.map(item => item.id === updatedTodo.id ? updatedTodo : item))
+    }, [updatedTodo])
 
 
         return(
             <>
                 <div className={'todo'}>
-                    <TodoForm
+                    <TodoForm setLists={setLists} lists={lists}  setCurrentTodo={setCurrentTodo}
                     />
-                    <TodoDescription
-                        getCurrentTodo={getCurrentTodo}
-                    />
+                    <TodoDescription setUpdatedTodo={setUpdatedTodo} currentTodo={currentTodo}/>
                 </div>
 
             </>

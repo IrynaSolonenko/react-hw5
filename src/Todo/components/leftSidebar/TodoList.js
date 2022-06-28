@@ -1,10 +1,8 @@
-// import {useState} from "react";
-// import {TodoItem} from "./TodoItem";
 import './styles/TodoList.css';
 import {TodoItem} from "./TodoItem";
 import React, {useState} from "react";
 
-export function TodoList ({lists}){
+export function TodoList ({lists, setCurrentTodo}){
 
     return(
     <div>
@@ -12,6 +10,7 @@ export function TodoList ({lists}){
             {lists.map((todoItem) =>
                     <TodoItem item={todoItem}
                               key={todoItem.id}
+                              setCurrentTodo={setCurrentTodo}
                     />
 
                 )

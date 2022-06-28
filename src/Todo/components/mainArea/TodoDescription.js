@@ -1,19 +1,66 @@
 import './TodoDescription.css';
-import {useState} from "react";
+import {useEffect, useState} from "react";
 
-export function TodoDescription ({props, lists}){
-    const [active, setActive] = useState(false);
+export function TodoDescription ({currentTodo, setUpdatedTodo}){
+    const [newTodo, setNewTodo] = useState({})
+    const [isNew, setIsNew] = useState(false)
+
+    useEffect(() => {
+        setNewTodo(currentTodo)
+    }, [currentTodo])
+
+    const handleChangeDescription = (e) => {
+        setNewTodo({...currentTodo, [e.target.name]: e.target.value})
+    }
+    
+    const saveChange = () => {
+        let data = new Date().toLocaleTimeString();
+        setNewTodo({...newTodo, history: [...newTodo.history, {field: 'description', action: 'change', prevValue: currentTodo.description, currentValue: newTodo.description, appliedAt: data}]})
+        setIsNew(true);
+    }
+
+    useEffect(() => {
+        if (isNew) setUpdatedTodo(newTodo)
+        setIsNew(false)
+    }, [isNew])
+
     return(
-        <div className={'descriptionContainer'}>
-            <h1>Title</h1>
-        <h2 >
-            {active ? active.props.item.title : null}
-        </h2>
-            <p
-                className={'todoDescription'}>
-                {active ? active.props.item.description : null}
-            </p>
-        </div>
+        <>
+            {currentTodo.title ?
+                <div className={'mainAreaContainer'}>
+                <div className={'descriptionContainer'}>
+                    <h1>Title</h1>
+                    <h2>
+                        {newTodo.title}
+                    </h2>
+                    <textarea onChange={handleChangeDescription} value={newTodo.description} name="description" id="" cols="60" rows="10"/>
+                <button className={'addChangeButton'} onClick={saveChange}>Save</button>
+                </div>
+
+                    <div>
+                        <h1>History</h1>
+                        <div className={'history'}>
+
+                            <span><b>{'todo-name: '}</b>{currentTodo.title}</span><br />
+                            <span><b>{'current todo-description: '}</b>{newTodo.description}</span><br />
+                            <span><b>{'previous todo-description: '}</b>{currentTodo.description}</span><br />
+                            <span><b>{'change-data: '}</b>{
+                                newTodo.history.map(item=>{
+                                    return item ? item.appliedAt : '';
+                                })
+                            }</span>
+
+                        </div>
+                    </div>
+
+                </div>
+
+                :
+                <div>
+                    Todos not found
+                </div>
+            }
+        </>
     )
 
 }

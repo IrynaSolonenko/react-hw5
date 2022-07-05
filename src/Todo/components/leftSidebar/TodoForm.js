@@ -7,10 +7,6 @@ import {TodoSearchForm} from "./TodoSearchForm";
 
 export function TodoForm({setCurrentTodo, name, setLists, lists}) {
 
-
-
-    console.log(lists);
-
     const createItem = (newItem) => {
         setLists([...lists, newItem])
     }
